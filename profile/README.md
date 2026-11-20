@@ -11,17 +11,18 @@ work and play can fit on that platform without a desktop environment.
 | --- | --- | --- |
 | [icarus-kernel](https://github.com/Section-9-Workflows/icarus-kernel) | A 32-bit Linux kernel configuration and build recipe for the VAIO P. | PREEMPT_RT, VAIO device support, explicit Atom compiler targeting, and kernel/module packaging. |
 | [poulsback](https://github.com/Section-9-Workflows/poulsback) | An experimental Linux graphics driver for Intel GMA 500 / 600. | A fork for VAIO-focused driver changes and upstream contributions, including panel handling, graphics initialization, and sleep/resume work. |
+| [Poulygon](https://github.com/Section-9-Workflows/poulygon) | A compact Rust engine for flat-shaded 3D through Poulsback, without X, Wayland, OpenGL or Mesa. | Native-resolution cube, workload explorer and Cybersphere demos, plus a [reusable engine library](https://github.com/Section-9-Workflows/poulygon/tree/cinnabar/engine-library) used by the Cinnabar console port. |
 | [fbterm](https://github.com/Section-9-Workflows/fbterm) | A Linux framebuffer terminal with font rendering, scrollback, and multiple windows. | Console fixes and a [native Poulsback backend](https://github.com/Section-9-Workflows/fbterm/tree/poulsback-native), including GPU-assisted scrolling without X or Wayland. |
 | [md-tui](https://github.com/Section-9-Workflows/md-tui) | A keyboard-driven Markdown reader with links, a file tree, search, and external-editor support. | [Console-oriented changes](https://github.com/Section-9-Workflows/md-tui/tree/icarus) for document-relative links, screen clearing, a compact help footer, and i686 builds. |
 | [Orca-c](https://github.com/Section-9-Workflows/Orca-c) | A terminal livecoding environment for procedural sequencing through MIDI, OSC, and UDP. | [Depot builds for i686 Linux](https://github.com/Section-9-Workflows/Orca-c/tree/build/depot-i686/tools/depot) with PortMidi and a bundled runtime for older systems. The application code follows upstream. |
-| [cinnabar](https://github.com/Section-9-Workflows/cinnabar) | An independent Minecraft: Bedrock Edition client. | An experimental [native console port](https://github.com/Section-9-Workflows/cinnabar/tree/poulygon/native-client) that connects shared game/session logic to flat-shaded graphics through Poulsback. |
+| [cinnabar](https://github.com/Section-9-Workflows/cinnabar) | An independent Minecraft: Bedrock Edition client. | An experimental [native console port](https://github.com/Section-9-Workflows/cinnabar/tree/poulygon/native-client) that connects shared game/session logic to Poulygon's flat-shaded renderer. |
 
 ## How they fit together
 
 The kernel recipe supplies the VAIO platform configuration. Poulsback provides
-native graphics interfaces on top of Linux. There are two application paths:
-a framebuffer terminal for text work and music sequencing, and a direct
-rendering path for the experimental game client.
+native graphics interfaces on top of Linux. Fbterm supports text work and music
+sequencing. Poulygon provides the direct 3D rendering path for its demos and the
+experimental Cinnabar console client.
 
 ```mermaid
 flowchart TD
@@ -29,7 +30,9 @@ flowchart TD
     P --> F["fbterm · native terminal backend"]
     F --> M["md-tui · Markdown browsing and editing"]
     F --> O["Orca-c · livecoding and music sequencing"]
-    P --> C["Cinnabar console port · native rendering adapter"]
+    P --> G["Poulygon · flat-shaded 3D engine"]
+    G --> D["Cube, explorer and Cybersphere demos"]
+    G --> C["Cinnabar console port · native rendering adapter"]
 ```
 
 This shows how the projects can be used together, rather than a list of mandatory
