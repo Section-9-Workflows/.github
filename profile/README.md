@@ -13,26 +13,28 @@ work and play can fit on that platform without a desktop environment.
 | [poulsback](https://github.com/Section-9-Workflows/poulsback) | An experimental Linux graphics driver for Intel GMA 500 / 600. | A fork for VAIO-focused driver changes and upstream contributions, including panel handling, graphics initialization, and sleep/resume work. |
 | [fbterm](https://github.com/Section-9-Workflows/fbterm) | A Linux framebuffer terminal with font rendering, scrollback, and multiple windows. | Console fixes and a [native Poulsback backend](https://github.com/Section-9-Workflows/fbterm/tree/poulsback-native), including GPU-assisted scrolling without X or Wayland. |
 | [md-tui](https://github.com/Section-9-Workflows/md-tui) | A keyboard-driven Markdown reader with links, a file tree, search, and external-editor support. | [Console-oriented changes](https://github.com/Section-9-Workflows/md-tui/tree/icarus) for document-relative links, screen clearing, a compact help footer, and i686 builds. |
+| [Orca-c](https://github.com/Section-9-Workflows/Orca-c) | A terminal livecoding environment for procedural sequencing through MIDI, OSC, and UDP. | [Depot builds for i686 Linux](https://github.com/Section-9-Workflows/Orca-c/tree/build/depot-i686/tools/depot) with PortMidi and a bundled runtime for older systems. The application code follows upstream. |
 | [cinnabar](https://github.com/Section-9-Workflows/cinnabar) | An independent Minecraft: Bedrock Edition client. | An experimental [native console port](https://github.com/Section-9-Workflows/cinnabar/tree/poulygon/native-client) that connects shared game/session logic to flat-shaded graphics through Poulsback. |
 
 ## How they fit together
 
 The kernel recipe supplies the VAIO platform configuration. Poulsback provides
 native graphics interfaces on top of Linux. There are two application paths:
-a framebuffer terminal for everyday text work, and a direct rendering path for
-the experimental game client.
+a framebuffer terminal for text work and music sequencing, and a direct
+rendering path for the experimental game client.
 
 ```mermaid
 flowchart TD
     K["icarus-kernel · VAIO platform"] --> P["Poulsback · graphics driver"]
     P --> F["fbterm · native terminal backend"]
     F --> M["md-tui · Markdown browsing and editing"]
+    F --> O["Orca-c · livecoding and music sequencing"]
     P --> C["Cinnabar console port · native rendering adapter"]
 ```
 
 This shows how the projects can be used together, rather than a list of mandatory
-software dependencies. md-tui also runs in other terminals, fbterm retains its
-ordinary framebuffer backend, and Poulsback can be built for other supported
+software dependencies. md-tui and Orca-c also run in other terminals. fbterm retains
+its ordinary framebuffer backend, and Poulsback can be built for other supported
 kernel configurations. Cinnabar's upstream desktop client is separate from the
 console port.
 
@@ -53,7 +55,8 @@ instructions and validation notes describe what has actually been checked.
 
 These forks build on [Poulsback](https://github.com/ishad0w/poulsback),
 [FbTerm](https://github.com/sfzhi/fbterm),
-[MD-TUI](https://github.com/henriklovhaug/md-tui), and
+[MD-TUI](https://github.com/henriklovhaug/md-tui),
+[Orca-c](https://github.com/hundredrabbits/Orca-c), and
 [Cinnabar](https://github.com/cinnabar-mc/cinnabar). Their authorship, licenses,
 and contribution processes remain with those projects. Focused fixes are kept
 separate where practical so they can be reviewed upstream.
